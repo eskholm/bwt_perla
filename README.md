@@ -61,12 +61,6 @@ No YAML configuration is required.
 
 ---
 
-## Screenshots
-
-*(Add some screenshots of the sensors in HA once you have them.)*
-
----
-
 ## Development
 
 - Python 3.11+
