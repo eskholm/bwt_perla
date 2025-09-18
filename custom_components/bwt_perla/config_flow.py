@@ -28,7 +28,7 @@ DATA_SCHEMA = vol.Schema(
         vol.Optional(CONF_USERNAME, default=""): str,
         vol.Optional(CONF_PASSWORD, default=""): str,
         vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
-            vol.Coerce(int), vol.Range(min=5, max=3600)
+            vol.Coerce(int), vol.Range(min=1, max=3600)
         ),
     }
 )
