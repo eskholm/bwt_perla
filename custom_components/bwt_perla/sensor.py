@@ -12,6 +12,7 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -108,6 +109,30 @@ async def async_setup_entry(
         name="BWT Perla",
     )
 
+    # For-registrer med faste engelske object_ids
+    registry = er.async_get(hass)
+    for d in SENSOR_DESCRIPTIONS:
+        unique_id = f"{entry.entry_id}_{d.key}"
+        suggested = (d.translation_key or d.key or "sensor").lower()
+        registry.async_get_or_create(
+            domain="sensor",
+            platform=DOMAIN,
+            unique_id=unique_id,
+            suggested_object_id=suggested,
+            config_entry=entry,
+            device_id=None,
+        )
+    for key, _fallback_name, _t_key, suggested in TIMESTAMP_DESCS:
+        unique_id = f"{entry.entry_id}_{key}"
+        registry.async_get_or_create(
+            domain="sensor",
+            platform=DOMAIN,
+            unique_id=unique_id,
+            suggested_object_id=suggested,
+            config_entry=entry,
+            device_id=None,
+        )
+
     entities: list[SensorEntity] = []
     for d in SENSOR_DESCRIPTIONS:
         entities.append(BwtNumberSensor(coordinator, entry.entry_id, d, device_info))
@@ -124,12 +149,9 @@ class BwtNumberSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self.entity_description = desc
         self._key = desc.key
-        self._attr_unique_id = f"{entry_id}_{desc.key}"
+        self._attr_unique_id = f"{entry.entry_id}_{desc.key}"
         self._attr_device_info = device_info
-        # sikre engelske entity_id'er uanset sprog
-        # brug translation_key hvis sat; ellers et slug fra raw key
-        suggested = (desc.translation_key or desc.key or "sensor").lower()
-        self._attr_suggested_object_id = suggested
+        # Navn vises via translation_key; entity_id er låst af registry ovenfor
 
     @property
     def native_unit_of_measurement(self) -> Optional[str]:
@@ -169,17 +191,15 @@ class BwtTimestampSensor(CoordinatorEntity, SensorEntity):
         key: str,
         fallback_name: str,
         translation_key: str,
-        suggested_object_id: str,
+        _suggested_object_id: str,
         device_info: DeviceInfo,
     ):
         super().__init__(coordinator)
         self._key = key
-        self._attr_unique_id = f"{entry_id}_{key}"
+        self._attr_unique_id = f"{entry.entry_id}_{key}"
         self._attr_device_info = device_info
         self._attr_translation_key = translation_key
-        self._attr_name = fallback_name  # fallback display-navn
-        # fast engelskt entity_id
-        self._attr_suggested_object_id = suggested_object_id
+        self._attr_name = fallback_name  # fallback visningsnavn
 
     @property
     def native_value(self):
