@@ -1,0 +1,8 @@
+{
+  "name": "BWT Perla",
+  "content_in_root": false,
+  "domains": ["bwt_perla"],
+  "country": "any",
+  "homeassistant": "2023.12.0",
+  "render_readme": true
+}

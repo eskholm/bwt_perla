@@ -1,0 +1,12 @@
+{
+  "domain": "bwt_perla",
+  "name": "BWT Perla",
+  "version": "0.1.0",
+  "config_flow": true,
+  "documentation": "https://example.invalid/bwt_perla",
+  "issue_tracker": "https://example.invalid/bwt_perla/issues",
+  "iot_class": "local_polling",
+  "integration_type": "device",
+  "codeowners": ["@eskholm"],
+  "requirements": []
+}

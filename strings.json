@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to BWT Perla",
+        "description": "Enter host, port and optional credentials",
+        "data": {
+          "host": "Host or IP",
+          "port": "Port",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Scan interval (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "Cannot connect" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Water treated today" },
+      "water_treated_month": { "name": "Water treated current month" },
+      "water_treated_year": { "name": "Water treated current year" },
+      "water_since_setup": { "name": "Water since setup" },
+      "blended_water_since_setup": { "name": "Blended water since setup" },
+      "current_flow": { "name": "Current flow" },
+      "hardness_in": { "name": "Hardness in" },
+      "hardness_in_caco3": { "name": "Hardness in CaCO3" },
+      "hardness_out": { "name": "Hardness out" },
+      "hardness_out_caco3": { "name": "Hardness out CaCO3" },
+      "regens_total": { "name": "Regenerations since setup" },
+      "regens_col1": { "name": "Regenerations column 1" },
+      "regens_col2": { "name": "Regenerations column 2" },
+      "salt_used_since_setup": { "name": "Salt used since setup" },
+      "salt_level": { "name": "Salt level" },
+      "salt_remaining_days": { "name": "Salt remaining days" },
+      "dosing_since_setup": { "name": "Dosing since setup" },
+      "last_regen_col1": { "name": "Last regeneration column 1" },
+      "last_regen_col2": { "name": "Last regeneration column 2" },
+      "last_service_customer": { "name": "Last service customer" },
+      "last_service_technician": { "name": "Last service technician" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Error" },
+      "out_of_service": { "name": "Out of service" }
+    }
+  }
+}

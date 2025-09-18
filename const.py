@@ -1,0 +1,11 @@
+DOMAIN = "bwt_perla"
+DEFAULT_PORT = 8080
+DEFAULT_SCAN_INTERVAL = 30
+API_PATH = "/api/GetCurrentData"
+CONF_HOST = "host"
+CONF_PORT = "port"
+CONF_USERNAME = "username"
+CONF_PASSWORD = "password"
+CONF_SCAN_INTERVAL = "scan_interval"
+MANUFACTURER = "BWT"
+MODEL = "Perla"

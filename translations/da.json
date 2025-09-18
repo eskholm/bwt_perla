@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Forbind til BWT Perla",
+        "description": "Angiv host, port og evt. brugernavn/kodeord",
+        "data": {
+          "host": "Host eller IP",
+          "port": "Port",
+          "username": "Brugernavn",
+          "password": "Kodeord",
+          "scan_interval": "Opdateringsinterval (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "Kan ikke forbinde" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Behandlet vand i dag" },
+      "water_treated_month": { "name": "Behandlet vand denne måned" },
+      "water_treated_year": { "name": "Behandlet vand i år" },
+      "water_since_setup": { "name": "Vand siden opsætning" },
+      "blended_water_since_setup": { "name": "Blandet vand siden opsætning" },
+      "current_flow": { "name": "Aktuelt flow" },
+      "hardness_in": { "name": "Hårdhed ind" },
+      "hardness_in_caco3": { "name": "Hårdhed ind CaCO3" },
+      "hardness_out": { "name": "Hårdhed ud" },
+      "hardness_out_caco3": { "name": "Hårdhed ud CaCO3" },
+      "regens_total": { "name": "Regenereringer siden opsætning" },
+      "regens_col1": { "name": "Regenereringer kolonne 1" },
+      "regens_col2": { "name": "Regenereringer kolonne 2" },
+      "salt_used_since_setup": { "name": "Salt brugt siden opsætning" },
+      "salt_level": { "name": "Saltniveau" },
+      "salt_remaining_days": { "name": "Dage med salt tilbage" },
+      "dosing_since_setup": { "name": "Dosering siden opsætning" },
+      "last_regen_col1": { "name": "Seneste regenerering kolonne 1" },
+      "last_regen_col2": { "name": "Seneste regenerering kolonne 2" },
+      "last_service_customer": { "name": "Seneste service (kunde)" },
+      "last_service_technician": { "name": "Seneste service (tekniker)" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Fejl" },
+      "out_of_service": { "name": "Ude af drift" }
+    }
+  }
+}

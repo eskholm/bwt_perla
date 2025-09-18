@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Yhdistä BWT Perlaan",
+        "description": "Anna isäntä, portti ja tarvittaessa käyttäjätunnus/salasana",
+        "data": {
+          "host": "Isäntä tai IP",
+          "port": "Portti",
+          "username": "Käyttäjätunnus",
+          "password": "Salasana",
+          "scan_interval": "Päivitysväli (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "Yhteyttä ei voida muodostaa" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Käsitelty vesi tänään" },
+      "water_treated_month": { "name": "Käsitelty vesi tässä kuussa" },
+      "water_treated_year": { "name": "Käsitelty vesi tänä vuonna" },
+      "water_since_setup": { "name": "Vesi asennuksesta lähtien" },
+      "blended_water_since_setup": { "name": "Sekoitettu vesi asennuksesta lähtien" },
+      "current_flow": { "name": "Virtaus nyt" },
+      "hardness_in": { "name": "Kovuus sisään" },
+      "hardness_in_caco3": { "name": "Kovuus sisään CaCO3" },
+      "hardness_out": { "name": "Kovuus ulos" },
+      "hardness_out_caco3": { "name": "Kovuus ulos CaCO3" },
+      "regens_total": { "name": "Regeneroinnit asennuksesta" },
+      "regens_col1": { "name": "Regeneroinnit kolonni 1" },
+      "regens_col2": { "name": "Regeneroinnit kolonni 2" },
+      "salt_used_since_setup": { "name": "Suolan käyttö asennuksesta" },
+      "salt_level": { "name": "Suolataso" },
+      "salt_remaining_days": { "name": "Suolaa jäljellä (päivää)" },
+      "dosing_since_setup": { "name": "Annostelu asennuksesta" },
+      "last_regen_col1": { "name": "Viime regenerointi kolonni 1" },
+      "last_regen_col2": { "name": "Viime regenerointi kolonni 2" },
+      "last_service_customer": { "name": "Viime huolto (asiakas)" },
+      "last_service_technician": { "name": "Viime huolto (teknikko)" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Virhe" },
+      "out_of_service": { "name": "Poissa käytöstä" }
+    }
+  }
+}

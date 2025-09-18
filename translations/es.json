@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conectar a BWT Perla",
+        "description": "Introduzca host, puerto y credenciales opcionales",
+        "data": {
+          "host": "Host o IP",
+          "port": "Puerto",
+          "username": "Usuario",
+          "password": "Contraseña",
+          "scan_interval": "Intervalo de actualización (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "No se puede conectar" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Agua tratada hoy" },
+      "water_treated_month": { "name": "Agua tratada este mes" },
+      "water_treated_year": { "name": "Agua tratada este año" },
+      "water_since_setup": { "name": "Agua desde la instalación" },
+      "blended_water_since_setup": { "name": "Agua mezclada desde la instalación" },
+      "current_flow": { "name": "Flujo actual" },
+      "hardness_in": { "name": "Dureza de entrada" },
+      "hardness_in_caco3": { "name": "Dureza de entrada CaCO3" },
+      "hardness_out": { "name": "Dureza de salida" },
+      "hardness_out_caco3": { "name": "Dureza de salida CaCO3" },
+      "regens_total": { "name": "Regeneraciones desde la instalación" },
+      "regens_col1": { "name": "Regeneraciones columna 1" },
+      "regens_col2": { "name": "Regeneraciones columna 2" },
+      "salt_used_since_setup": { "name": "Sal usado desde la instalación" },
+      "salt_level": { "name": "Nivel de sal" },
+      "salt_remaining_days": { "name": "Días restantes de sal" },
+      "dosing_since_setup": { "name": "Dosificación desde la instalación" },
+      "last_regen_col1": { "name": "Última regeneración columna 1" },
+      "last_regen_col2": { "name": "Última regeneración columna 2" },
+      "last_service_customer": { "name": "Último servicio (cliente)" },
+      "last_service_technician": { "name": "Último servicio (técnico)" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Error" },
+      "out_of_service": { "name": "Fuera de servicio" }
+    }
+  }
+}

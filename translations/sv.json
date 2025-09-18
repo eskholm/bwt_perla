@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Anslut till BWT Perla",
+        "description": "Ange värd, port och ev. användarnamn/lösenord",
+        "data": {
+          "host": "Värd eller IP",
+          "port": "Port",
+          "username": "Användarnamn",
+          "password": "Lösenord",
+          "scan_interval": "Uppdateringsintervall (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "Kan inte ansluta" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Behandlat vatten idag" },
+      "water_treated_month": { "name": "Behandlat vatten denna månad" },
+      "water_treated_year": { "name": "Behandlat vatten i år" },
+      "water_since_setup": { "name": "Vatten sedan installation" },
+      "blended_water_since_setup": { "name": "Blandat vatten sedan installation" },
+      "current_flow": { "name": "Aktuellt flöde" },
+      "hardness_in": { "name": "Hårdhet in" },
+      "hardness_in_caco3": { "name": "Hårdhet in CaCO3" },
+      "hardness_out": { "name": "Hårdhet ut" },
+      "hardness_out_caco3": { "name": "Hårdhet ut CaCO3" },
+      "regens_total": { "name": "Regenereringar sedan installation" },
+      "regens_col1": { "name": "Regenereringar kolumn 1" },
+      "regens_col2": { "name": "Regenereringar kolumn 2" },
+      "salt_used_since_setup": { "name": "Saltförbrukning sedan installation" },
+      "salt_level": { "name": "Saltnivå" },
+      "salt_remaining_days": { "name": "Återstående dagar med salt" },
+      "dosing_since_setup": { "name": "Dosering sedan installation" },
+      "last_regen_col1": { "name": "Senaste regenerering kolumn 1" },
+      "last_regen_col2": { "name": "Senaste regenerering kolumn 2" },
+      "last_service_customer": { "name": "Senaste service (kund)" },
+      "last_service_technician": { "name": "Senaste service (tekniker)" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Fel" },
+      "out_of_service": { "name": "Ur drift" }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connexion à BWT Perla",
+        "description": "Saisissez l’hôte, le port et éventuellement les identifiants",
+        "data": {
+          "host": "Hôte ou IP",
+          "port": "Port",
+          "username": "Nom d’utilisateur",
+          "password": "Mot de passe",
+          "scan_interval": "Intervalle de mise à jour (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "Impossible de se connecter" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Eau traitée aujourd’hui" },
+      "water_treated_month": { "name": "Eau traitée ce mois-ci" },
+      "water_treated_year": { "name": "Eau traitée cette année" },
+      "water_since_setup": { "name": "Eau depuis l’installation" },
+      "blended_water_since_setup": { "name": "Eau mélangée depuis l’installation" },
+      "current_flow": { "name": "Débit actuel" },
+      "hardness_in": { "name": "Dureté en entrée" },
+      "hardness_in_caco3": { "name": "Dureté en entrée CaCO3" },
+      "hardness_out": { "name": "Dureté en sortie" },
+      "hardness_out_caco3": { "name": "Dureté en sortie CaCO3" },
+      "regens_total": { "name": "Régénérations depuis l’installation" },
+      "regens_col1": { "name": "Régénérations colonne 1" },
+      "regens_col2": { "name": "Régénérations colonne 2" },
+      "salt_used_since_setup": { "name": "Sel utilisé depuis l’installation" },
+      "salt_level": { "name": "Niveau de sel" },
+      "salt_remaining_days": { "name": "Jours restants de sel" },
+      "dosing_since_setup": { "name": "Dosage depuis l’installation" },
+      "last_regen_col1": { "name": "Dernière régénération colonne 1" },
+      "last_regen_col2": { "name": "Dernière régénération colonne 2" },
+      "last_service_customer": { "name": "Dernier service (client)" },
+      "last_service_technician": { "name": "Dernier service (technicien)" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Erreur" },
+      "out_of_service": { "name": "Hors service" }
+    }
+  }
+}

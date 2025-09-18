@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connetti a BWT Perla",
+        "description": "Inserisci host, porta e credenziali opzionali",
+        "data": {
+          "host": "Host o IP",
+          "port": "Porta",
+          "username": "Nome utente",
+          "password": "Password",
+          "scan_interval": "Intervallo di aggiornamento (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "Impossibile connettersi" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Acqua trattata oggi" },
+      "water_treated_month": { "name": "Acqua trattata questo mese" },
+      "water_treated_year": { "name": "Acqua trattata quest’anno" },
+      "water_since_setup": { "name": "Acqua dall’installazione" },
+      "blended_water_since_setup": { "name": "Acqua miscelata dall’installazione" },
+      "current_flow": { "name": "Flusso attuale" },
+      "hardness_in": { "name": "Durezza in ingresso" },
+      "hardness_in_caco3": { "name": "Durezza in ingresso CaCO3" },
+      "hardness_out": { "name": "Durezza in uscita" },
+      "hardness_out_caco3": { "name": "Durezza in uscita CaCO3" },
+      "regens_total": { "name": "Rigenerazioni dall’installazione" },
+      "regens_col1": { "name": "Rigenerazioni colonna 1" },
+      "regens_col2": { "name": "Rigenerazioni colonna 2" },
+      "salt_used_since_setup": { "name": "Sale usato dall’installazione" },
+      "salt_level": { "name": "Livello del sale" },
+      "salt_remaining_days": { "name": "Giorni di sale rimanenti" },
+      "dosing_since_setup": { "name": "Dosaggio dall’installazione" },
+      "last_regen_col1": { "name": "Ultima rigenerazione colonna 1" },
+      "last_regen_col2": { "name": "Ultima rigenerazione colonna 2" },
+      "last_service_customer": { "name": "Ultima manutenzione (cliente)" },
+      "last_service_technician": { "name": "Ultima manutenzione (tecnico)" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Errore" },
+      "out_of_service": { "name": "Fuori servizio" }
+    }
+  }
+}

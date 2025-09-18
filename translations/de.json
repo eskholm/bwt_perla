@@ -1,0 +1,49 @@
+{
+  "title": "BWT Perla",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit BWT Perla verbinden",
+        "description": "Geben Sie Host, Port und ggf. Benutzername/Passwort ein",
+        "data": {
+          "host": "Host oder IP",
+          "port": "Port",
+          "username": "Benutzername",
+          "password": "Passwort",
+          "scan_interval": "Aktualisierungsintervall (s)"
+        }
+      }
+    },
+    "error": { "cannot_connect": "Keine Verbindung möglich" },
+    "abort": {}
+  },
+  "entity": {
+    "sensor": {
+      "water_treated_today": { "name": "Aufbereitetes Wasser heute" },
+      "water_treated_month": { "name": "Aufbereitetes Wasser diesen Monat" },
+      "water_treated_year": { "name": "Aufbereitetes Wasser dieses Jahr" },
+      "water_since_setup": { "name": "Wasser seit Einrichtung" },
+      "blended_water_since_setup": { "name": "Gemischtes Wasser seit Einrichtung" },
+      "current_flow": { "name": "Aktueller Durchfluss" },
+      "hardness_in": { "name": "Härte Eingang" },
+      "hardness_in_caco3": { "name": "Härte Eingang CaCO3" },
+      "hardness_out": { "name": "Härte Ausgang" },
+      "hardness_out_caco3": { "name": "Härte Ausgang CaCO3" },
+      "regens_total": { "name": "Regenerationen seit Einrichtung" },
+      "regens_col1": { "name": "Regenerationen Säule 1" },
+      "regens_col2": { "name": "Regenerationen Säule 2" },
+      "salt_used_since_setup": { "name": "Salzverbrauch seit Einrichtung" },
+      "salt_level": { "name": "Salzstand" },
+      "salt_remaining_days": { "name": "Verbleibende Tage mit Salz" },
+      "dosing_since_setup": { "name": "Dosierung seit Einrichtung" },
+      "last_regen_col1": { "name": "Letzte Regeneration Säule 1" },
+      "last_regen_col2": { "name": "Letzte Regeneration Säule 2" },
+      "last_service_customer": { "name": "Letzter Service (Kunde)" },
+      "last_service_technician": { "name": "Letzter Service (Techniker)" }
+    },
+    "binary_sensor": {
+      "error": { "name": "Fehler" },
+      "out_of_service": { "name": "Außer Betrieb" }
+    }
+  }
+}
