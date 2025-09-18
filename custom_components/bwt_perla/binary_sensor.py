@@ -24,12 +24,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
 class _BaseBwtBinary(CoordinatorEntity, BinarySensorEntity):
     _attr_has_entity_name = True
-    def __init__(self, coordinator, entry_id: str, fallback_name: str, unique_key: str, translation_key: str, device_info: DeviceInfo):
+    def __init__(self, coordinator, entry_id: str, fallback_name: str, unique_key: str, translation_key: str, suggested_object_id: str, device_info: DeviceInfo):
         super().__init__(coordinator)
         self._attr_unique_id = f"{entry_id}_{unique_key}"
         self._attr_device_info = device_info
         self._attr_translation_key = translation_key
-        self._attr_name = fallback_name  
+        self._attr_name = fallback_name                # fallback visningsnavn
+        self._attr_suggested_object_id = suggested_object_id  # fast engelsk entity_id
     @property
     def _data(self) -> dict[str, Any]:
         return self.coordinator.data or {}
@@ -37,7 +38,7 @@ class _BaseBwtBinary(CoordinatorEntity, BinarySensorEntity):
 class BwtErrorBinarySensor(_BaseBwtBinary):
     _attr_device_class = "problem"
     def __init__(self, coordinator, entry_id: str, device_info: DeviceInfo):
-        super().__init__(coordinator, entry_id, "Error", "error", "error", device_info)
+        super().__init__(coordinator, entry_id, "Error", "error", "error", "error", device_info)
     @property
     def is_on(self) -> bool:
         show_error = int(self._data.get("ShowError", 0)) == 1
@@ -50,7 +51,7 @@ class BwtErrorBinarySensor(_BaseBwtBinary):
 class BwtOutOfServiceBinarySensor(_BaseBwtBinary):
     _attr_device_class = "problem"
     def __init__(self, coordinator, entry_id: str, device_info: DeviceInfo):
-        super().__init__(coordinator, entry_id, "Out of service", "out_of_service", "out_of_service", device_info)
+        super().__init__(coordinator, entry_id, "Out of service", "out_of_service", "out_of_service", "out_of_service", device_info)
     @property
     def is_on(self) -> bool:
         return int(self._data.get("OutOfService", 0)) == 1
