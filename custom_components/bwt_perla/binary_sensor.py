@@ -24,19 +24,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     entry_id = entry.entry_id
     registry = er.async_get(hass)
 
-    # For-registrer engelske object_ids
+    # Pre-register with English, prefixed entity_ids
     registry.async_get_or_create(
         domain="binary_sensor",
         platform=DOMAIN,
         unique_id=f"{entry_id}_error",
-        suggested_object_id="error",
+        suggested_object_id="bwt_perla_error",
         config_entry=entry,
     )
     registry.async_get_or_create(
         domain="binary_sensor",
         platform=DOMAIN,
         unique_id=f"{entry_id}_out_of_service",
-        suggested_object_id="out_of_service",
+        suggested_object_id="bwt_perla_out_of_service",
         config_entry=entry,
     )
 
@@ -56,7 +56,7 @@ class _BaseBwtBinary(CoordinatorEntity, BinarySensorEntity):
         self._attr_unique_id = f"{entry_id}_{unique_key}"
         self._attr_device_info = device_info
         self._attr_translation_key = translation_key
-        self._attr_name = fallback_name  # fallback visningsnavn
+        self._attr_name = fallback_name  # fallback display name
 
     @property
     def _data(self) -> dict[str, Any]:

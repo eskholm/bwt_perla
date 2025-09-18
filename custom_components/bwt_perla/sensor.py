@@ -89,7 +89,7 @@ SENSOR_DESCRIPTIONS: List[BwtDesc] = [
             native_unit_of_measurement="mL", state_class=SensorStateClass.TOTAL_INCREASING),
 ]
 
-# (key, fallback_name, translation_key, suggested_object_id)
+# (key, fallback_name, translation_key, suggested_slug)
 TIMESTAMP_DESCS: List[Tuple[str, str, str, str]] = [
     ("LastRegenerationColumn1", "Last regeneration column 1", "last_regen_col1", "last_regen_col1"),
     ("LastRegenerationColumn2", "Last regeneration column 2", "last_regen_col2", "last_regen_col2"),
@@ -109,11 +109,12 @@ async def async_setup_entry(
         name="BWT Perla",
     )
 
-    # Pre-registrer med faste engelske object_ids
+    # Pre-register with English, prefixed entity_ids
     registry = er.async_get(hass)
     for d in SENSOR_DESCRIPTIONS:
         unique_id = f"{entry.entry_id}_{d.key}"
-        suggested = (d.translation_key or d.key or "sensor").lower()
+        base = (d.translation_key or d.key or "sensor").lower()
+        suggested = f"bwt_perla_{base}"
         registry.async_get_or_create(
             domain="sensor",
             platform=DOMAIN,
@@ -127,7 +128,7 @@ async def async_setup_entry(
             domain="sensor",
             platform=DOMAIN,
             unique_id=unique_id,
-            suggested_object_id=suggested,
+            suggested_object_id=f"bwt_perla_{suggested}",
             config_entry=entry,
         )
 
@@ -135,7 +136,11 @@ async def async_setup_entry(
     for d in SENSOR_DESCRIPTIONS:
         entities.append(BwtNumberSensor(coordinator, entry.entry_id, d, device_info))
     for key, fallback_name, t_key, suggested in TIMESTAMP_DESCS:
-        entities.append(BwtTimestampSensor(coordinator, entry.entry_id, key, fallback_name, t_key, suggested, device_info))
+        entities.append(
+            BwtTimestampSensor(
+                coordinator, entry.entry_id, key, fallback_name, t_key, f"bwt_perla_{suggested}", device_info
+            )
+        )
 
     async_add_entities(entities)
 
@@ -150,7 +155,7 @@ class BwtNumberSensor(CoordinatorEntity, SensorEntity):
         self._entry_id = entry_id
         self._attr_unique_id = f"{entry_id}_{desc.key}"
         self._attr_device_info = device_info
-        # Navn oversættes via translation_key; entity_id låses af registry i async_setup_entry
+        # display name comes from translation_key + description.name
 
     @property
     def native_unit_of_measurement(self) -> Optional[str]:
@@ -199,7 +204,7 @@ class BwtTimestampSensor(CoordinatorEntity, SensorEntity):
         self._attr_unique_id = f"{entry_id}_{key}"
         self._attr_device_info = device_info
         self._attr_translation_key = translation_key
-        self._attr_name = fallback_name  # fallback display-navn
+        self._attr_name = fallback_name  # fallback display name
 
     @property
     def native_value(self):
