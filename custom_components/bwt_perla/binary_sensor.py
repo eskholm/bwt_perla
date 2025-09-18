@@ -21,26 +21,28 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         name="BWT Perla",
     )
 
-    # For-registrer engelske object_ids
+    entry_id = entry.entry_id
     registry = er.async_get(hass)
+
+    # For-registrer engelske object_ids
     registry.async_get_or_create(
         domain="binary_sensor",
         platform=DOMAIN,
-        unique_id=f"{entry.entry_id}_error",
+        unique_id=f"{entry_id}_error",
         suggested_object_id="error",
         config_entry=entry,
     )
     registry.async_get_or_create(
         domain="binary_sensor",
         platform=DOMAIN,
-        unique_id=f"{entry.entry_id}_out_of_service",
+        unique_id=f"{entry_id}_out_of_service",
         suggested_object_id="out_of_service",
         config_entry=entry,
     )
 
     entities: list[BinarySensorEntity] = [
-        BwtErrorBinarySensor(coordinator, entry.entry_id, device_info),
-        BwtOutOfServiceBinarySensor(coordinator, entry.entry_id, device_info),
+        BwtErrorBinarySensor(coordinator, entry_id, device_info),
+        BwtOutOfServiceBinarySensor(coordinator, entry_id, device_info),
     ]
     async_add_entities(entities)
 
@@ -50,6 +52,7 @@ class _BaseBwtBinary(CoordinatorEntity, BinarySensorEntity):
 
     def __init__(self, coordinator, entry_id: str, fallback_name: str, unique_key: str, translation_key: str, device_info: DeviceInfo):
         super().__init__(coordinator)
+        self._entry_id = entry_id
         self._attr_unique_id = f"{entry_id}_{unique_key}"
         self._attr_device_info = device_info
         self._attr_translation_key = translation_key
@@ -74,7 +77,10 @@ class BwtErrorBinarySensor(_BaseBwtBinary):
 
     @property
     def extra_state_attributes(self) -> dict:
-        return {"ShowError": self._data.get("ShowError"), "ActiveErrorIDs": self._data.get("ActiveErrorIDs")}
+        return {
+            "ShowError": self._data.get("ShowError"),
+            "ActiveErrorIDs": self._data.get("ActiveErrorIDs"),
+        }
 
 
 class BwtOutOfServiceBinarySensor(_BaseBwtBinary):

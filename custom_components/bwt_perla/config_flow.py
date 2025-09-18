@@ -1,44 +1,81 @@
 from __future__ import annotations
+
+from typing import Any
+
 import voluptuous as vol
-import aiohttp
+from aiohttp import ClientError, BasicAuth
+import async_timeout
+
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
-from .const import DOMAIN, CONF_HOST, CONF_PORT, CONF_USERNAME, CONF_PASSWORD, CONF_SCAN_INTERVAL, DEFAULT_PORT, DEFAULT_SCAN_INTERVAL, API_PATH
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-STEP_USER_DATA_SCHEMA = vol.Schema({
-    vol.Required(CONF_HOST): str,
-    vol.Optional(CONF_PORT, default=DEFAULT_PORT): int,
-    vol.Optional(CONF_USERNAME): str,
-    vol.Optional(CONF_PASSWORD): str,
-    vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): int,
-})
+from .const import (
+    DOMAIN,
+    API_PATH,
+    CONF_HOST,
+    CONF_PORT,
+    CONF_USERNAME,
+    CONF_PASSWORD,
+    CONF_SCAN_INTERVAL,
+    DEFAULT_SCAN_INTERVAL,
+)
 
-async def _probe(host: str, port: int | None, username: str | None, password: str | None) -> dict:
+DATA_SCHEMA = vol.Schema(
+    {
+        vol.Required(CONF_HOST): str,
+        vol.Optional(CONF_PORT, default=8080): vol.Coerce(int),
+        vol.Optional(CONF_USERNAME, default=""): str,
+        vol.Optional(CONF_PASSWORD, default=""): str,
+        vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
+            vol.Coerce(int), vol.Range(min=5, max=3600)
+        ),
+    }
+)
+
+
+async def _try_connect(hass: HomeAssistant, host: str, port: int | None, username: str, password: str) -> dict[str, Any]:
     base = f"http://{host}:{port}" if port else f"http://{host}"
     url = f"{base}{API_PATH}"
-    auth = aiohttp.BasicAuth(username, password) if username else None
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url, auth=auth) as resp:
-            if resp.status != 200:
-                raise RuntimeError(f"HTTP {resp.status}")
-            return await resp.json(content_type=None)
+    session = async_get_clientsession(hass)
+    auth = BasicAuth(username, password) if username else None
+    try:
+        async with async_timeout.timeout(10):
+            resp = await session.get(url, auth=auth)
+        if resp.status != 200:
+            txt = await resp.text()
+            raise ClientError(f"HTTP {resp.status}: {txt[:200]}")
+        # Nogle enheder sætter ikke content-type til application/json
+        data = await resp.json(content_type=None)
+        if not isinstance(data, dict):
+            raise ClientError("Unexpected payload")
+        return data
+    except Exception as err:
+        raise ClientError(str(err)) from err
 
-class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+
+class BwtPerlaConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
-    async def async_step_user(self, user_input=None) -> FlowResult:
-        if user_input is None:
-            return self.async_show_form(step_id="user", data_schema=STEP_USER_DATA_SCHEMA)
+    async def async_step_user(self, user_input: dict[str, Any] | None = None):
+        errors: dict[str, str] = {}
+        if user_input is not None:
+            host = user_input[CONF_HOST].strip()
+            port = user_input.get(CONF_PORT)
+            username = user_input.get(CONF_USERNAME, "").strip()
+            password = user_input.get(CONF_PASSWORD, "")
 
-        host = user_input[CONF_HOST].strip()
-        await self.async_set_unique_id(f"{DOMAIN}_{host}")
-        self._abort_if_unique_id_configured()
+            # unik pr. host:port
+            unique = f"{host}:{port or 80}"
+            await self.async_set_unique_id(unique)
+            self._abort_if_unique_id_configured()
 
-        try:
-            await _probe(host, user_input.get(CONF_PORT), user_input.get(CONF_USERNAME), user_input.get(CONF_PASSWORD))
-        except Exception as e:
-            return self.async_show_form(step_id="user", data_schema=STEP_USER_DATA_SCHEMA,
-                                        errors={"base": "cannot_connect"})
+            try:
+                await _try_connect(self.hass, host, port, username, password)
+            except ClientError:
+                errors["base"] = "cannot_connect"
 
-        return self.async_create_entry(title=f"BWT Perla ({host})", data=user_input)
+            if not errors:
+                return self.async_create_entry(title="BWT Perla", data=user_input)
+
+        return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)

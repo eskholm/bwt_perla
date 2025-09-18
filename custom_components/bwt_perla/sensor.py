@@ -109,7 +109,7 @@ async def async_setup_entry(
         name="BWT Perla",
     )
 
-    # For-registrer med faste engelske object_ids
+    # Pre-registrer med faste engelske object_ids
     registry = er.async_get(hass)
     for d in SENSOR_DESCRIPTIONS:
         unique_id = f"{entry.entry_id}_{d.key}"
@@ -120,7 +120,6 @@ async def async_setup_entry(
             unique_id=unique_id,
             suggested_object_id=suggested,
             config_entry=entry,
-            device_id=None,
         )
     for key, _fallback_name, _t_key, suggested in TIMESTAMP_DESCS:
         unique_id = f"{entry.entry_id}_{key}"
@@ -130,7 +129,6 @@ async def async_setup_entry(
             unique_id=unique_id,
             suggested_object_id=suggested,
             config_entry=entry,
-            device_id=None,
         )
 
     entities: list[SensorEntity] = []
@@ -149,9 +147,10 @@ class BwtNumberSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self.entity_description = desc
         self._key = desc.key
-        self._attr_unique_id = f"{entry.entry_id}_{desc.key}"
+        self._entry_id = entry_id
+        self._attr_unique_id = f"{entry_id}_{desc.key}"
         self._attr_device_info = device_info
-        # Navn vises via translation_key; entity_id er låst af registry ovenfor
+        # Navn oversættes via translation_key; entity_id låses af registry i async_setup_entry
 
     @property
     def native_unit_of_measurement(self) -> Optional[str]:
@@ -196,10 +195,11 @@ class BwtTimestampSensor(CoordinatorEntity, SensorEntity):
     ):
         super().__init__(coordinator)
         self._key = key
-        self._attr_unique_id = f"{entry.entry_id}_{key}"
+        self._entry_id = entry_id
+        self._attr_unique_id = f"{entry_id}_{key}"
         self._attr_device_info = device_info
         self._attr_translation_key = translation_key
-        self._attr_name = fallback_name  # fallback visningsnavn
+        self._attr_name = fallback_name  # fallback display-navn
 
     @property
     def native_value(self):
