@@ -11,13 +11,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    PERCENTAGE,
-    UnitOfMass,
-    UnitOfTime,
-    UnitOfVolume,
-    UnitOfVolumeFlowRate,
-)
+from homeassistant.const import UnitOfVolume, UnitOfVolumeFlowRate
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
@@ -86,16 +80,16 @@ SENSOR_DESCRIPTIONS: List[BwtDesc] = [
             state_class=SensorStateClass.TOTAL_INCREASING),
     BwtDesc(key="RegenerativSinceSetup_g", name="Salt used since setup",
             translation_key="salt_used_since_setup",
-            native_unit_of_measurement=UnitOfMass.GRAMS, state_class=SensorStateClass.TOTAL_INCREASING),
+            native_unit_of_measurement="g", state_class=SensorStateClass.TOTAL_INCREASING),
     BwtDesc(key="RegenerativLevel", name="Salt level",
             translation_key="salt_level",
-            native_unit_of_measurement=PERCENTAGE, state_class=SensorStateClass.MEASUREMENT, decimals=0),
+            native_unit_of_measurement="%", state_class=SensorStateClass.MEASUREMENT, decimals=0),
     BwtDesc(key="RegenerativRemainingDays", name="Salt remaining days",
             translation_key="salt_remaining_days",
-            native_unit_of_measurement=UnitOfTime.DAYS, state_class=SensorStateClass.MEASUREMENT, decimals=0),
+            native_unit_of_measurement="days", state_class=SensorStateClass.MEASUREMENT, decimals=0),
     BwtDesc(key="DosingSinceSetup_ml", name="Dosing since setup",
             translation_key="dosing_since_setup",
-            native_unit_of_measurement=UnitOfVolume.MILLILITERS, state_class=SensorStateClass.TOTAL_INCREASING),
+            native_unit_of_measurement="mL", state_class=SensorStateClass.TOTAL_INCREASING),
 ]
 
 # (key, fallback_name, translation_key, suggested_slug)
