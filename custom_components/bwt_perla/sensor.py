@@ -11,6 +11,13 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import (
+    PERCENTAGE,
+    UnitOfMass,
+    UnitOfTime,
+    UnitOfVolume,
+    UnitOfVolumeFlowRate,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
@@ -32,27 +39,29 @@ class BwtDesc(SensorEntityDescription):
 SENSOR_DESCRIPTIONS: List[BwtDesc] = [
     BwtDesc(key="WaterTreatedCurrentDay_l", name="Water treated today",
             translation_key="water_treated_today",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
-            state_class=SensorStateClass.TOTAL, factor=1, decimals=0),
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
+            state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="WaterTreatedCurrentMonth_l", name="Water treated current month",
             translation_key="water_treated_month",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
-            state_class=SensorStateClass.TOTAL, factor=1, decimals=0),
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
+            state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="WaterTreatedCurrentYear_l", name="Water treated current year",
             translation_key="water_treated_year",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
-            state_class=SensorStateClass.TOTAL, factor=1, decimals=0),
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
+            state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="WaterSinceSetup_l", name="Water since setup",
             translation_key="water_since_setup",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
             state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="BlendedWaterSinceSetup_l", name="Blended water since setup",
             translation_key="blended_water_since_setup",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
             state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="CurrentFlowrate_l_h", name="Current flow",
             translation_key="current_flow",
-            native_unit_of_measurement="L/h", state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_HOUR,
+            device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
+            state_class=SensorStateClass.MEASUREMENT,
             factor=1.0, decimals=0),
     BwtDesc(key="HardnessIN_dH", name="Hardness in",
             translation_key="hardness_in",
@@ -77,16 +86,16 @@ SENSOR_DESCRIPTIONS: List[BwtDesc] = [
             state_class=SensorStateClass.TOTAL_INCREASING),
     BwtDesc(key="RegenerativSinceSetup_g", name="Salt used since setup",
             translation_key="salt_used_since_setup",
-            native_unit_of_measurement="g", state_class=SensorStateClass.TOTAL_INCREASING),
+            native_unit_of_measurement=UnitOfMass.GRAMS, state_class=SensorStateClass.TOTAL_INCREASING),
     BwtDesc(key="RegenerativLevel", name="Salt level",
             translation_key="salt_level",
-            native_unit_of_measurement="%", state_class=SensorStateClass.MEASUREMENT, decimals=0),
+            native_unit_of_measurement=PERCENTAGE, state_class=SensorStateClass.MEASUREMENT, decimals=0),
     BwtDesc(key="RegenerativRemainingDays", name="Salt remaining days",
             translation_key="salt_remaining_days",
-            native_unit_of_measurement="days", state_class=SensorStateClass.MEASUREMENT, decimals=0),
+            native_unit_of_measurement=UnitOfTime.DAYS, state_class=SensorStateClass.MEASUREMENT, decimals=0),
     BwtDesc(key="DosingSinceSetup_ml", name="Dosing since setup",
             translation_key="dosing_since_setup",
-            native_unit_of_measurement="mL", state_class=SensorStateClass.TOTAL_INCREASING),
+            native_unit_of_measurement=UnitOfVolume.MILLILITERS, state_class=SensorStateClass.TOTAL_INCREASING),
 ]
 
 # (key, fallback_name, translation_key, suggested_slug)
