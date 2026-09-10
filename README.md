@@ -35,8 +35,8 @@ It provides sensors and binary sensors for monitoring water consumption, hardnes
 1. Go to **HACS → Integrations → Custom repositories**.
 2. Add this repository URL: https://github.com/eskholm/bwt_perla/
 3. Category: **Integration**.
-3. Install the integration.
-4. Restart Home Assistant.
+4. Install the integration.
+5. Restart Home Assistant.
 
 ### Manual
 
@@ -58,6 +58,12 @@ You’ll be asked to provide:
 - Optional scan interval
 
 No YAML configuration is required.
+
+### Energy dashboard
+
+For Home Assistant's Energy dashboard, use **Water since setup** as the water-consumption sensor. It is a cumulative water total with the required water device class and statistics metadata.
+
+**Current flow** represents the instantaneous flow rate in L/h. It is useful for dashboards and automations, but it is not a cumulative water-consumption sensor and should not be selected as the Energy dashboard water source.
 
 ---
 
