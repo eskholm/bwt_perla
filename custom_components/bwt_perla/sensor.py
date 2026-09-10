@@ -11,6 +11,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import UnitOfVolume, UnitOfVolumeFlowRate
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
@@ -32,27 +33,29 @@ class BwtDesc(SensorEntityDescription):
 SENSOR_DESCRIPTIONS: List[BwtDesc] = [
     BwtDesc(key="WaterTreatedCurrentDay_l", name="Water treated today",
             translation_key="water_treated_today",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
-            state_class=SensorStateClass.TOTAL, factor=1, decimals=0),
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
+            state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="WaterTreatedCurrentMonth_l", name="Water treated current month",
             translation_key="water_treated_month",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
-            state_class=SensorStateClass.TOTAL, factor=1, decimals=0),
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
+            state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="WaterTreatedCurrentYear_l", name="Water treated current year",
             translation_key="water_treated_year",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
-            state_class=SensorStateClass.TOTAL, factor=1, decimals=0),
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
+            state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="WaterSinceSetup_l", name="Water since setup",
             translation_key="water_since_setup",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
             state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="BlendedWaterSinceSetup_l", name="Blended water since setup",
             translation_key="blended_water_since_setup",
-            native_unit_of_measurement="l", device_class=SensorDeviceClass.WATER,
+            native_unit_of_measurement=UnitOfVolume.LITERS, device_class=SensorDeviceClass.WATER,
             state_class=SensorStateClass.TOTAL_INCREASING, factor=1, decimals=0),
     BwtDesc(key="CurrentFlowrate_l_h", name="Current flow",
             translation_key="current_flow",
-            native_unit_of_measurement="L/h", state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_HOUR,
+            device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
+            state_class=SensorStateClass.MEASUREMENT,
             factor=1.0, decimals=0),
     BwtDesc(key="HardnessIN_dH", name="Hardness in",
             translation_key="hardness_in",
