@@ -61,7 +61,9 @@ No YAML configuration is required.
 
 ### Energy dashboard
 
-For Home Assistant's Energy dashboard, use **Water since setup** as the water-consumption sensor. It is a cumulative water total with the required water device class and statistics metadata.
+For Home Assistant's Energy dashboard, use **Blended water since setup** as the whole-house water-consumption sensor. It is a cumulative total and is the better representation of water delivered through the Perla, including periods where water may pass through while softening is bypassed or out of service.
+
+**Water since setup** tracks the amount of water actually treated by the softener. It can therefore be lower than **Blended water since setup** after bypass or passthrough periods.
 
 **Current flow** represents the instantaneous flow rate in L/h. It is useful for dashboards and automations, but it is not a cumulative water-consumption sensor and should not be selected as the Energy dashboard water source.
 
