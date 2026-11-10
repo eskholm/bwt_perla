@@ -63,6 +63,10 @@ No YAML configuration is required.
 
 For Home Assistant's Energy dashboard, use **Blended water since setup** as the whole-house water-consumption sensor. It is a cumulative total and is the better representation of water delivered through the Perla, including periods where water may pass through while softening is bypassed or out of service.
 
+In this integration (`eskholm/bwt_perla`), the suggested entity ID is `sensor.bwt_perla_blended_water_since_setup`. The display name is translated, and existing entity IDs can differ. If you cannot find the sensor, check the Home Assistant entity list with disabled and hidden entities included. If the sensor is enabled but has an `unknown` state, check whether the device's `/api/GetCurrentData` response contains a numeric `BlendedWaterSinceSetup_l` value.
+
+The separate [dkarv/ha-bwt-perla](https://github.com/dkarv/ha-bwt-perla) integration uses the same **BWT Perla** name and `bwt_perla` domain. Check the repository URL in HACS to tell them apart. That integration calls its cumulative blended-water sensor **Total water consumption** (`total_output`).
+
 **Water since setup** tracks the amount of water actually treated by the softener. It can therefore be lower than **Blended water since setup** after bypass or passthrough periods.
 
 **Current flow** represents the instantaneous flow rate in L/h. It is useful for dashboards and automations, but it is not a cumulative water-consumption sensor and should not be selected as the Energy dashboard water source.
